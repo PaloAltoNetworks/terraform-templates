@@ -29,7 +29,18 @@ Setting up the AWS Security Credentials:
 -----------------------------------------
 
  - Before applying the terraform templates, setup the AWS credentials.
- - This can be done by editing the ```aws_creds.tf``` file in each of the respective directories.
+ - This can be done by the usual methods as prescribed by AWS namely:
+    - export the credentials as environment variables
+    - Static credentials in a <filename>.tf file
+    - Other options are specified at: https://www.terraform.io/docs/providers/aws/index.html
+
+Salient Arguments that need to be set that are user specific:
+-------------------------------------------------------------
+
+  - The S3 buckets which contain the PAN bootstrap code as well as the Lambda code need to be specified.
+    - Variable: MasterS3Bucket File: ```aws/aws_cft/terraform.tfvars```
+
+
 
 Usage Instructions for the Outer Template:
 ------------------------------------------
@@ -78,5 +89,5 @@ The following issues should be noted during the cleanup:
    - ENI's for the MgmtSecurityGroup
    - please manually detach and delete these ENI's
 3. Rerun: terraform destroy.
-4. Also make sure to cleanup the Auto Scale Group entities as well as the previously created Launch Configurations prior
-   to running the infrastructure again (typically if using the same name.)
+4. [Important] Also make sure to cleanup the Auto Scale Group entities as well as the previously created Launch Configurations
+   prior to running the infrastructure again (typically if using the same name.)

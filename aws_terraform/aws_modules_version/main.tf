@@ -52,7 +52,9 @@ module "eni_natgw" {
   LambdaExecutionRole = "${module.lambda.lambda_execution_role_arn}"
   AZSubnetIDLambda = "${var.AZSubnetIDLambda}"
   VPCSecurityGroup = "${module.vpc.vpc_security_group_id}"
-  aws_region = "${var.aws_region}"
+  PanS3BucketTpl = "${var.PanS3BucketTpl}"
+  KeyMap = "${var.KeyMap}"
+  MasterS3Bucket = "${var.MasterS3Bucket}"
 }
 
 module "eni" {
@@ -60,12 +62,13 @@ module "eni" {
   NATGateway = "${var.NATGateway}"
   StackName = "${var.StackName}"
   LambdaExecutionRole = "${module.lambda.lambda_execution_role_arn}"
-  aws_region = "${var.aws_region}"
+  PanS3BucketTpl = "${var.PanS3BucketTpl}"
+  KeyMap = "${var.KeyMap}"
+  MasterS3Bucket = "${var.MasterS3Bucket}"
 }
 
 module "sns" {
   source = "./sns"
-  aws_region = "${var.aws_region}"
   NATGateway = "${var.NATGateway}"
   AddENILambdaARN = "${module.eni.add_eni_lambda_arn}"
   #AddENILambdaARN = "${module.eni_natgw.add_eni_lambdan_arn}"
@@ -77,10 +80,8 @@ module "vpc" {
   StackName = "${var.StackName}"
   VPCCIDR = "${var.VPCCIDR}"
   SSHLocation = "${var.SSHLocation}"
-  aws_region = "${var.aws_region}"
 }
 
 module "sqs" {
   source = "./sqs"
-  aws_region = "${var.aws_region}"
 }

@@ -9,12 +9,12 @@ resource "aws_iam_role_policy" "FirewallBootstrapRolePolicy" {
     {
       "Effect": "Allow",
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::vv-payg-bootstrap"
+      "Resource": "arn:aws:s3:::${var.MasterS3Bucket}"
     },
     {
     "Effect": "Allow",
     "Action": "s3:GetObject",
-    "Resource": "arn:aws:s3:::vv-payg-bootstrap/*"
+    "Resource": "arn:aws:s3:::${var.MasterS3Bucket}/*"
     }
   ]
 }
@@ -95,12 +95,12 @@ resource "aws_iam_role_policy" "LambdaExecutionRolePolicy" {
             {
                     "Effect": "Allow",
                     "Action": "s3:ListBucket",
-                    "Resource": ["arn:aws:s3:::vv-payg-lambda"]
+                    "Resource": ["arn:aws:s3:::${var.PanS3BucketTpl}"]
             },
             {
                     "Effect": "Allow",
                     "Action": "s3:GetObject",
-                    "Resource": ["arn:aws:s3:::vv-payg-lambda/*"]
+                    "Resource": ["arn:aws:s3:::${var.PanS3BucketTpl}/*"]
             },
     {
         "Effect": "Allow",
@@ -271,8 +271,8 @@ resource "aws_lambda_function" "InitLambda" {
   function_name = "${join("-", list(var.StackName, "InitLambda"))}"
   handler = "init.lambda_handler"
   role = "${aws_iam_role.LambdaExecutionRole.arn}"
-  s3_bucket = "vv-payg-lambda"
-  s3_key = "panw-aws.zip"
+  s3_bucket = "${var.PanS3BucketTpl}"
+  s3_key = "${var.KeyMap["Key"]}"
   runtime = "python2.7"
   timeout = "300"
 }

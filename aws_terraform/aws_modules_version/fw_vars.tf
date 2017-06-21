@@ -128,7 +128,6 @@ variable "ScalingPeriod" {
 variable "PanS3BucketTpl" {
   type = "string"
   description = "VM-Series firewall Lambda/Scripts/CFT template S3 Bucket or your own in the same region"
-  default = "vv-payg-lambda"
 }
 
 variable "BucketRegionMap" {

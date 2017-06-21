@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "AddENILambda" {
   count = "${var.NATGateway == 0 ? 1 : 0}"
-  s3_bucket = "vv-payg-lambda"
-  s3_key = "panw-aws.zip"
+  s3_bucket = "${var.PanS3BucketTpl}"
+  s3_key = "${var.KeyMap["Key"]}"
   function_name    = "${join("-", list(var.StackName, "AddENILambda"))}"
   role             = "${var.LambdaExecutionRole}"
   handler          = "add_eni.lambda_handler"
