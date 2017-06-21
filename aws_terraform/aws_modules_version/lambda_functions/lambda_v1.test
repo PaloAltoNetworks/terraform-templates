@@ -1,0 +1,416 @@
+resource "aws_iam_role_policy" "FirewallBootstrapRolePolicy" {
+  name = "FirewallBootstrapRolePolicy"
+  role = "${aws_iam_role.FirewallBootstrapRole.id}"
+
+  policy = <<EOF
+{
+"Version" : "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Action": "s3:ListBucket",
+"Resource": "arn:aws:s3:::vv-payg-bootstrap"
+},
+{
+"Effect": "Allow",
+"Action": "s3:GetObject",
+"Resource": "arn:aws:s3:::vv-payg-bootstrap/*"
+}
+]
+}
+EOF
+}
+
+resource "aws_iam_role" "FirewallBootstrapRole" {
+  name = "FirewallBootstrapRole"
+
+  assume_role_policy = <<EOF
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Effect": "Allow",
+"Principal": {
+"Service": "ec2.amazonaws.com"
+},
+"Action": "sts:AssumeRole"
+}
+]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "FirewallBootstrapInstanceProfile" {
+  name  = "FirewallBootstrapInstanceProfile"
+  role = "${aws_iam_role.FirewallBootstrapRole.name}"
+  path = "/"
+}
+
+resource "aws_iam_role" "LambdaExecutionRole" {
+  name = "LambdaExecutionRole"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Effect": "Allow",
+    "Principal": {
+      "Service": "lambda.amazonaws.com"
+      },
+    "Action": "sts:AssumeRole"
+  }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "LambdaExecutionRolePolicy" {
+  name = "LambdaExecutionRolePolicy"
+  role = "${aws_iam_role.LambdaExecutionRole.id}"
+
+  policy = <<EOF
+{
+            "Version": "2012-10-17",
+            "Statement": [{
+                "Effect": "Allow",
+                "Action": "s3:ListBucket",
+                "Resource": ["arn:aws:s3:::vv-payg-bootstrap/*"]
+            },
+            {
+                "Effect": "Allow",
+                "Action": "s3:GetObject",
+                "Resource": ["arn:aws:s3:::vv-payg-bootstrap/*"]
+            },
+            {
+                    "Effect": "Allow",
+                    "Action": "s3:ListBucket",
+                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.l_aws_region]}"]
+            },
+            {
+                    "Effect": "Allow",
+                    "Action": "s3:GetObject",
+                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.l_aws_region]}/*"]
+            },
+            {
+                    "Effect": "Allow",
+                    "Action": "s3:ListBucket",
+                    "Resource": ["arn:aws:s3:::vv-payg-lambda"]
+            },
+            {
+                    "Effect": "Allow",
+                    "Action": "s3:GetObject",
+                    "Resource": ["arn:aws:s3:::vv-payg-lambda/*"]
+            },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ec2:AllocateAddress",
+            "ec2:AssociateAddress",
+            "ec2:AssociateRouteTable",
+            "ec2:AttachInternetGateway",
+            "ec2:AttachNetworkInterface",
+            "ec2:CreateNetworkInterface",
+            "ec2:CreateTags",
+            "ec2:DeleteNetworkInterface",
+            "ec2:DeleteRouteTable",
+            "ec2:DeleteSecurityGroup",
+            "ec2:DeleteTags",
+            "ec2:DescribeAddresses",
+            "ec2:DescribeAvailabilityZones",
+            "ec2:DescribeInstanceAttribute",
+            "ec2:DescribeInstanceStatus",
+            "ec2:DescribeInstances",
+            "ec2:DescribeImages",
+            "ec2:DescribeNatGateways",
+            "ec2:DescribeNetworkInterfaceAttribute",
+            "ec2:DescribeNetworkInterfaces",
+            "ec2:DescribeTags",
+            "ec2:DescribeVpcEndpoints",
+            "ec2:DescribeVpcs",
+            "ec2:DescribeSubnets",
+            "ec2:DescribeSecurityGroups",
+            "ec2:DetachInternetGateway",
+            "ec2:DetachNetworkInterface",
+            "ec2:DetachVolume",
+            "ec2:DisassociateAddress",
+            "ec2:DisassociateRouteTable",
+            "ec2:ModifyNetworkInterfaceAttribute",
+            "ec2:ModifySubnetAttribute",
+            "ec2:MonitorInstances",
+            "ec2:RebootInstances",
+            "ec2:ReleaseAddress",
+            "ec2:ReportInstanceStatus",
+            "ec2:TerminateInstances",
+            "ec2:DescribeIdFormat"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "events:*"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "cloudwatch:*"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "lambda:AddPermission",
+            "lambda:CreateEventSourceMapping",
+            "lambda:CreateFunction",
+            "lambda:DeleteEventSourceMapping",
+            "lambda:DeleteFunction",
+            "lambda:GetEventSourceMapping",
+            "lambda:ListEventSourceMappings",
+            "lambda:RemovePermission",
+            "lambda:UpdateEventSourceMapping",
+            "lambda:UpdateFunctionCode",
+            "lambda:UpdateFunctionConfiguration",
+            "lambda:GetFunction",
+            "lambda:ListFunctions"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "autoscaling:*"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "sqs:ReceiveMessage",
+            "sqs:SendMessage",
+            "sqs:SetQueueAttributes",
+            "sqs:PurgeQueue"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "elasticloadbalancing:AddTags",
+            "elasticloadbalancing:AttachLoadBalancerToSubnets",
+            "elasticloadbalancing:ConfigureHealthCheck",
+            "elasticloadbalancing:DescribeInstanceHealth",
+            "elasticloadbalancing:DescribeLoadBalancerAttributes",
+            "elasticloadbalancing:DescribeLoadBalancerPolicyTypes",
+            "elasticloadbalancing:DescribeLoadBalancerPolicies",
+            "elasticloadbalancing:DescribeLoadBalancers",
+            "elasticloadbalancing:DescribeTags",
+            "elasticloadbalancing:DetachLoadBalancerFromSubnets",
+            "elasticloadbalancing:ModifyLoadBalancerAttributes",
+            "elasticloadbalancing:RemoveTags"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "iam:PassRole",
+            "iam:GetRole"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["cloudformation:DescribeStacks"],
+      "Resource": "*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutDestination",
+            "logs:PutDestinationPolicy",
+            "logs:PutLogEvents",
+            "logs:PutMetricFilter"
+        ],
+        "Resource": [
+            "*"
+        ]
+    }
+  ]
+}
+EOF
+}
+
+
+resource "aws_lambda_function" "AddENILambdaN" {
+  count = "${var.NATGateway}"
+  s3_bucket = "vv-payg-lambda"
+  s3_key = "panw-aws.zip"
+  function_name    = "AddENILambdaN"
+  role             = "${aws_iam_role.LambdaExecutionRole.arn}"
+  handler          = "add_eni.lambda_handler"
+  runtime          = "python2.7"
+  timeout          = "300"
+}
+
+/*
+resource "aws_lambda_function" "InitLambda" {
+  function_name = "InitLambda"
+  handler = "init.lambda_handler"
+  role = "${aws_iam_role.LambdaExecutionRole.arn}"
+  s3_bucket = "vv-payg-lambda"
+  s3_key = "panw-aws.zip"
+  runtime = "python2.7"
+  timeout = "300"
+} */
+
+resource "aws_lambda_function" "InitLambda" {
+  function_name = "InitLambda"
+  handler = "vv_staging_lambda.vv_lambda_handler"
+  role = "${aws_iam_role.LambdaExecutionRole.arn}"
+  s3_bucket = "vv-tf-cft"
+  s3_key = "vv_staging_lambda.zip"
+  runtime = "python2.7"
+  timeout = "300"
+}
+
+/*
+
+
+
+*/
+
+resource "aws_cloudformation_stack" "LambdaCustomResource6" {
+  name = "LambdaCustomResource6"
+  parameters {
+    InitLambda = "${aws_lambda_function.InitLambda.arn}"
+    StackName = "${var.StackName}"
+    Region = "${var.l_aws_region}"
+    VPCID = "${var.VPCID}"
+    MgmtSecurityGroup = "${var.MgmtSecurityGroup}"
+    UntrustSecurityGroup = "${var.UntrustSecurityGroup}"
+    TrustSecurityGroup = "${var.TrustSecurityGroup}"
+    #AZSubnetIDLambda = "${var.AZSubnetIDLambda}"
+    AZSubnetIDNATGW = "${var.AZSubnetIDNATGW}"
+    AZSubnetIDMgmt = "${var.AZSubnetIDMgmt}"
+    AZSubnetIDUntrust = "${var.AZSubnetIDUntrust}"
+    AZSubnetIDTrust = "${var.AZSubnetIDTrust}"
+    KeyName = "${var.KeyName}"
+    LambdaENISNSTopic = "${var.LambdaENISNSTopic}"
+    LambdaENIQueue = "${var.LambdaENIQueue}"
+  }
+  template_body = <<STACK
+{
+  "Parameters" : {
+    "InitLambda": {
+      "Type": "String",
+      "Description": "ARN of the Init Lambda function"
+    },
+    "StackName": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "Region": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "VPCID": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "MgmtSecurityGroup": {
+      "Type": "String",
+      "Description": "Mgmt Security Group"
+    },
+    "UntrustSecurityGroup": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "TrustSecurityGroup": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "AZSubnetIDNATGW": {
+        "Description": "Subnet IDs of AWS NAT Gateway ",
+        "Type" : "CommaDelimitedList"
+    },
+    "AZSubnetIDMgmt" : {
+      "Type" : "List<AWS::EC2::Subnet::Id>",
+      "Description": "Enter Subnet ID for the mgmt interface for all the AZs"
+    },
+    "AZSubnetIDUntrust" : {
+      "Type" : "List<AWS::EC2::Subnet::Id>",
+      "Description": "Enter Subnet ID for the untrust interface for all the AZs"
+    },
+    "AZSubnetIDTrust" : {
+      "Type" : "List<AWS::EC2::Subnet::Id>",
+      "Description": "Enter Subnet ID for the trust interface for all the AZs"
+    },
+    "KeyName": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "LambdaENIQueue": {
+      "Type": "String",
+      "Description": "Just a simple message"
+    },
+    "LambdaENISNSTopic": {
+      "Type": "String",
+      "Description": "SNS topic that receives ASG notifications"
+    }
+  },
+  "Resources" : {
+    "LambdaCustomResource6": {
+      "Type": "AWS::CloudFormation::CustomResource",
+      "Version" : "1.0",
+       "Properties" : {
+           "ServiceToken": { "Ref": "InitLambda" },
+           "StackName": {"Ref": "StackName"},
+           "Region": {"Ref": "Region"},
+           "VPCID": {"Ref": "VPCID"},
+           "MgmtSecurityGroup": {"Ref": "MgmtSecurityGroup"},
+           "UntrustSecurityGroup": {"Ref": "UntrustSecurityGroup"},
+           "TrustSecurityGroup": {"Ref": "TrustSecurityGroup"},
+           "SubnetIDMgmt": {"Ref": "AZSubnetIDMgmt"},
+           "SubnetIDUntrust": {"Ref": "AZSubnetIDUntrust"},
+           "SubnetIDTrust": {"Ref": "AZSubnetIDTrust"},
+           "SubnetIDNATGW": {"Ref": "AZSubnetIDNATGW"},
+           "KeyName" : {"Ref": "KeyName"},
+           "LambdaENISNSTopic": {"Ref": "LambdaENISNSTopic"},
+           "LambdaENIQueue" : { "Ref": "LambdaENIQueue" }
+       }
+    }
+  }
+}
+STACK
+}
+
+output "add_eni_lambda_arn" {
+  value = "${aws_lambda_function.AddENILambdaN.arn}"
+}

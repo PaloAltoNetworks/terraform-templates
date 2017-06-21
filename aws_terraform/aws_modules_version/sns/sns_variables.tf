@@ -1,0 +1,2 @@
+variable "NATGateway" {}
+variable "AddENILambdaARN" {}

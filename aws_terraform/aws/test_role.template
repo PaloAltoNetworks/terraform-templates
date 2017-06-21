@@ -1,0 +1,37 @@
+{
+  "Resources": {
+        "FirewallBootstrapRolePolicy" : {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+            "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [ {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "ec2.amazonaws.com"
+                    },
+                "Action": "sts:AssumeRole"
+                } ]
+            },
+            "Path":"/",
+            "Policies": [ {
+                "PolicyName" : "FirewallBootstrapRolePolicy",
+                "PolicyDocument": {
+                    "Version" : "2012-10-17",
+                    "Statement": [{
+                        "Effect": "Allow",
+                        "Action": "s3:ListBucket",
+                        "Resource": { "Fn::Join": [ "", [ "arn:aws:s3:::", "vv-payg-bootstrap"] ] }
+                    },
+                    {
+                        "Effect": "Allow",
+                        "Action": "s3:GetObject",
+                        "Resource": { "Fn::Join": [ "", [ "arn:aws:s3:::", "vv-payg-bootstrap" , "/*" ] ] }
+                    }
+                    ]
+                }
+            }]
+        }
+    }
+  }
+}
