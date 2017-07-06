@@ -25,7 +25,7 @@ This repo contains the following sub repositories:
       - Deploy the Web instances into a secure subnet
       - Deploy the PAN FW with interfaces on the untrust, trust and management subnets.
 
-   - ``` azure/two-tier-sample ```
+   - ``` azure_two_tier_sample ```
 
       - Deploy a two tier application
       - Deploy the Web instances into a secure subnet
