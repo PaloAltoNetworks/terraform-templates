@@ -180,8 +180,6 @@ resource "azurerm_virtual_network" "PAN_FW_VNET" {
   resource_group_name = "${azurerm_resource_group.PAN_FW_RG.name}"
   address_space       = ["${join("", list(var.IPAddressPrefix, ".0.0/16"))}"]
   location            = "${var.location}"
-  depends_on          = ["azurerm_route_table.PAN_FW_RT_Web", "azurerm_route_table.PAN_FW_RT_DB",
-                          "azurerm_network_security_group.PAN_FW_NSG"]
 
   tags {
     environment = "Production"
