@@ -11,7 +11,7 @@ and to secure these workloads using the PaloAltoNetworks VM-Series Firewall.
 
 This repo contains the following sub repositories:
 
-   - ``` aws_terraform ```
+   - ``` aws_elb_autoscale ```
 
       - Deploy a 3-tier application
       - Deploy and External Load Balancer that sits in front of the PAN FW's.
