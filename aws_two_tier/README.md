@@ -48,7 +48,8 @@ Terraform Templates to Deploy Infrastructure onto AWS
     - Upload the ``` bootstrap.xml ``` and ``` init-cfg.txt ``` files to the ``` config ``` folder.
     - Upload the ```panupv2-all-contents-695-4002``` file to the ``` content ``` folder.
 
-  - Hint: Its probably a good idea to clone the ```PaloAltoNetworks / aws ``` repo to your machine, and then navigate
+  - Hint: Its probably a good idea to clone the ```PaloAltoNetworks / aws ```
+          repo (link: ```https://github.com/PaloAltoNetworks/aws ``` ) to your machine, and then navigate
           to the ```two-tier-sample``` folder and upload the files. Please note the name of the parent folder: ```two-tier-sample``` and not the ``` two-tier sample```. Note the space in the latter.
 
 Usage:
