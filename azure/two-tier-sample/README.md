@@ -23,17 +23,21 @@ Credentials and Authentication:
 
   - An Azure Service Principal, with the proper role and permissions needs to be created prior to deploying
     workloads into Azure using terraform.
-    ``` See: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authenticate-service-principal-cli ```
+    ```
+        See: https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authenticate-service-principal-cli
+    ```
   - Once the service principal has been created on Azure, create a file called "azure_provider.tf" (file name could be anything
     but should end with .tf) with the following fields (pertaining to the service principal):
 
+    ```
       - provider "azurerm" {
             subscription_id = "<subscription_id>"
             client_id = "<client_id>"
             client_secret = "<secret used while creating the application>"
             tenant_id = "<tenant_id>"
         }
-
+    ```
+    
 Usage:
 ------
 
