@@ -287,6 +287,7 @@ resource "aws_instance" "WPWebInstance" {
           "while true\n",
           "  do\n",
           "   resp=$(curl -s -S -g --insecure \"https://${aws_eip.ManagementElasticIP.public_ip}/api/?type=op&cmd=<show><chassis-ready></chassis-ready></show>&key=LUFRPT10VGJKTEV6a0R4L1JXd0ZmbmNvdUEwa25wMlU9d0N5d292d2FXNXBBeEFBUW5pV2xoZz09\")\n",
+          "   echo $resp >> /tmp/pan.log\n",
           "   if [[ $resp == *\"[CDATA[yes\"* ]] ; then\n",
           "     break\n",
           "   fi\n",
@@ -296,6 +297,16 @@ resource "aws_instance" "WPWebInstance" {
           "apt-get install -y apache2 wordpress\n"
   )))
   }"
+}
+
+resource "null_resource" "check_fw_ready" {
+  triggers {
+    key = "${aws_instance.FWInstance.id}"
+  }
+
+  provisioner "local-exec" {
+    command = "./check_fw.sh ${aws_eip.ManagementElasticIP.public_ip}"
+  }
 }
 
 output "FirewallManagementURL" {
