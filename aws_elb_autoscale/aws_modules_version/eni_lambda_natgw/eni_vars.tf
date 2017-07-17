@@ -8,3 +8,4 @@ variable "KeyMap" {
   type = "map"
 }
 variable "MasterS3Bucket" {}
+variable "aws_region" {}

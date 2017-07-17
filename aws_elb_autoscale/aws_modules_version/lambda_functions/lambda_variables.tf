@@ -7,7 +7,7 @@ variable "UntrustSecurityGroup" {}
 variable "ASGNotifierRolePolicy" {}
 variable "ASGNotifierRole" {}
 
-variable "l_aws_region" {}
+variable "aws_region" {}
 
 variable "NATGateway" {}
 

@@ -1,7 +1,7 @@
 
 module "lambda" {
   source = "./lambda_functions"
-  l_aws_region = "${var.aws_region}"
+  aws_region = "${var.aws_region}"
   NATGateway = "${var.NATGateway}"
   AZSubnetIDLambda = "${var.AZSubnetIDLambda}"
   AZSubnetIDTrust = "${var.AZSubnetIDTrust}"
@@ -55,6 +55,7 @@ module "eni_natgw" {
   PanS3BucketTpl = "${var.PanS3BucketTpl}"
   KeyMap = "${var.KeyMap}"
   MasterS3Bucket = "${var.MasterS3Bucket}"
+  aws_region = "${var.aws_region}"
 }
 
 module "eni" {
@@ -65,6 +66,7 @@ module "eni" {
   PanS3BucketTpl = "${var.PanS3BucketTpl}"
   KeyMap = "${var.KeyMap}"
   MasterS3Bucket = "${var.MasterS3Bucket}"
+  aws_region = "${var.aws_region}"
 }
 
 module "sns" {
@@ -72,6 +74,7 @@ module "sns" {
   NATGateway = "${var.NATGateway}"
   AddENILambdaARN = "${module.eni.add_eni_lambda_arn}"
   #AddENILambdaARN = "${module.eni_natgw.add_eni_lambdan_arn}"
+  aws_region = "${var.aws_region}"
 }
 
 module "vpc" {
@@ -80,8 +83,10 @@ module "vpc" {
   StackName = "${var.StackName}"
   VPCCIDR = "${var.VPCCIDR}"
   SSHLocation = "${var.SSHLocation}"
+  aws_region = "${var.aws_region}"
 }
 
 module "sqs" {
   source = "./sqs"
+  aws_region = "${var.aws_region}"
 }

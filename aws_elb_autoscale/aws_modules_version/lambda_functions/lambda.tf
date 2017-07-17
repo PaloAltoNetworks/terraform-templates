@@ -85,12 +85,12 @@ resource "aws_iam_role_policy" "LambdaExecutionRolePolicy" {
             {
                     "Effect": "Allow",
                     "Action": "s3:ListBucket",
-                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.l_aws_region]}"]
+                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.aws_region]}"]
             },
             {
                     "Effect": "Allow",
                     "Action": "s3:GetObject",
-                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.l_aws_region]}/*"]
+                    "Resource": ["arn:aws:s3:::${var.BucketRegionMap[var.aws_region]}/*"]
             },
             {
                     "Effect": "Allow",
@@ -282,7 +282,7 @@ resource "aws_cloudformation_stack" "LambdaCustomResource" {
   parameters {
     InitLambda = "${aws_lambda_function.InitLambda.arn}"
     StackName = "${var.StackName}"
-    Region = "${var.l_aws_region}"
+    Region = "${var.aws_region}"
     VPCID = "${var.VPCID}"
     AZSubnetIDLambda = "${var.AZSubnetIDLambda}"
     AZSubnetIDNATGW = "${var.AZSubnetIDNATGW}"
