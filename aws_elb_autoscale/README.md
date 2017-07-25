@@ -28,7 +28,7 @@ c. The infrastructure definition is specified in the other ```*.tf``` files.
 # PreRequisites for Using the Terraform Template
 
 ### Identify the right AMI ID's for the PAN FW (depending on the license type desired)
-    [This can be found at:] (https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list "PAN AMI ID Table")
+    [This can be found at:](https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list "PAN AMI ID Table")
 
 ### Identify the right AMI ID's for the Web Server
     The selection depends on a combination of the supported Architectures as well as the desired instance type.
