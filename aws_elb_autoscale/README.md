@@ -27,6 +27,10 @@ c. The infrastructure definition is specified in the other ```*.tf``` files.
 
 # PreRequisites for Using the Terraform Template
 
+## Configure and setup the S3 Buckets with the Bootstrap and Lambda Code
+   This is described in Section 1 below.
+
+
 ### Identify the right AMI ID's for the PAN FW (depending on the license type desired)
 
     This can be found at:
@@ -36,8 +40,26 @@ c. The infrastructure definition is specified in the other ```*.tf``` files.
     The selection depends on a combination of the supported Architectures as well as the desired instance type.
     This table can be found in the file: ```webserver_ami_ids.md``` in this repo.
 
-Setting up the AWS Security Credentials:
------------------------------------------
+### 1. Setting up the S3 Bucket
+
+    - Create the ```bootstrap``` S3 bucket in the region the infrastructure will be deployed to.
+        - In the bucket, create the following folders:
+            - ```config```
+            - ```license```
+            - ```software```
+            - ```content```
+      - Upload files the various buckets from the following link:
+
+        - Upload the ``` bootstrap.xml ``` and ``` init-cfg.txt ``` files to the ``` config ``` folder.
+          - The bootstrap file link is: https://github.com/PaloAltoNetworks/aws-elb-autoscaling/blob/master/Version-1.2/bootstrap.xml
+          - The init.cfg file link is: https://github.com/PaloAltoNetworks/aws-elb-autoscaling/tree/master/Version-1.2
+
+    - Create the ```lambda``` code S3 bucket in the same region selected for the infrastructure deployment.
+        - Upload the lambda code zip file to this bucket.
+        - The link to the lambda code is: https://github.com/PaloAltoNetworks/aws-elb-autoscaling/blob/master/Version-1.2/panw-aws.zip
+
+### 2. Setting up the AWS Security Credentials:
+    --------------------------------------
 
  - Before applying the terraform templates, setup the AWS credentials.
  - This can be done by the usual methods as prescribed by AWS namely:
@@ -45,8 +67,8 @@ Setting up the AWS Security Credentials:
     - Static credentials in a <filename>.tf file
     - Other options are specified at: https://www.terraform.io/docs/providers/aws/index.html
 
-Salient Arguments that need to be set that are user specific:
--------------------------------------------------------------
+### 3. Salient Arguments that need to be set that are user specific:
+    ---------------------------------------------------------
 
   - The S3 buckets which contain the PAN bootstrap code as well as the Lambda code need to be specified.
     - Variable: MasterS3Bucket File: ```aws/aws_cft/terraform.tfvars```
