@@ -25,12 +25,13 @@ a. Variable parameters are specified in the ```terraform.tfvars``` file.
 b. Variable are defined in the ```*_vars.tf``` file.
 c. The infrastructure definition is specified in the other ```*.tf``` files.
 
-#H1 PreRequisites for Using the Terraform Template
+# PreRequisites for Using the Terraform Template
 
-### H3 Identify the right AMI ID's for the PAN FW (depending on the license type desired)
-    This can be found at: (https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list)
+### Identify the right AMI ID's for the PAN FW (depending on the license type desired)
+    This can be found at:
+    (https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list)
 
-### H3 Identify the right AMI ID's for the Web Server
+### Identify the right AMI ID's for the Web Server
     The selection depends on a combination of the supported Architectures as well as the desired instance type.
 
 Setting up the AWS Security Credentials:
