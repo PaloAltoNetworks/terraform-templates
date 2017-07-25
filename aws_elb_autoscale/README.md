@@ -25,6 +25,14 @@ a. Variable parameters are specified in the ```terraform.tfvars``` file.
 b. Variable are defined in the ```*_vars.tf``` file.
 c. The infrastructure definition is specified in the other ```*.tf``` files.
 
+#H1 PreRequisites for Using the Terraform Template
+
+### H3 Identify the right AMI ID's for the PAN FW (depending on the license type desired)
+    This can be found at: (https://www.paloaltonetworks.com/documentation/global/compatibility-matrix/vm-series-firewalls/aws-cft-amazon-machine-images-ami-list)
+
+### H3 Identify the right AMI ID's for the Web Server
+    The selection depends on a combination of the supported Architectures as well as the desired instance type.
+
 Setting up the AWS Security Credentials:
 -----------------------------------------
 
@@ -39,6 +47,9 @@ Salient Arguments that need to be set that are user specific:
 
   - The S3 buckets which contain the PAN bootstrap code as well as the Lambda code need to be specified.
     - Variable: MasterS3Bucket File: ```aws/aws_cft/terraform.tfvars```
+
+  - You will also be required to specify the S3 Bucket which contains the lambda code.
+     - You will be prompted for this value when you run the terraform apply command for the inner template.
 
 
 
