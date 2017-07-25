@@ -27,8 +27,8 @@
 |"t1.micro" | "PV64"   |
 |"t2.micro"    | "HVM64"  |
 |"t2.small"    | "HVM64"  |
-|t2.medium|   | "HVM64"  |
-|m1.small|    | "PV64"   |
+|t2.medium|   "HVM64"  |
+|m1.small|    "PV64"   |
 |"m1.medium"   | "PV64"   |
 |"m1.large"    | "PV64"   |
 |"m1.xlarge"   | "PV64"   |
