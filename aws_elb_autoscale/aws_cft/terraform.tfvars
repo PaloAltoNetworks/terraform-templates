@@ -1,0 +1,6 @@
+StackName = "tfv2"
+KeyPANWPanorama = "default-key"
+KeyDeLicense = "default-key"
+NATGateway = "0"
+VPCCIDR = "192.168.0.0/16"
+SSHLocation = "0.0.0.0/0"
