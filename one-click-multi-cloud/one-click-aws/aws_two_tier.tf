@@ -309,6 +309,18 @@ resource "null_resource" "check_fw_ready" {
   }
 }
 
+resource "null_resource" "configure_firewall" {
+  depends_on = ["null_resource.check_fw_ready"]
+  triggers {
+    key = "${null_resource.check_fw_ready.id}"
+  }
+
+  provisioner "local-exec" {
+    command = "./configure_firewall.sh ../../../ansible-playbooks/one_click_multicloud/one_click_aws.yml admin admin ${aws_eip.ManagementElasticIP.public_ip}"
+  }
+}
+
+
 output "FirewallManagementURL" {
   value = "${join("", list("https://", "${aws_eip.ManagementElasticIP.public_ip}"))}"
 }
