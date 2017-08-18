@@ -605,7 +605,7 @@ resource "null_resource" "configure_firewall" {
   }
 
   provisioner "local-exec" {
-    command = "./configure_firewall.sh ../../../ansible-playbooks/one_click_multicloud/one_click_azure.yml paloalto Pal0Alt0@123 ${azurerm_public_ip.PublicIP_0.fqdn}"
+    command = "./configure_firewall.sh ${var.playbook_path} ${var.adminUsername} ${var.adminPassword} ${azurerm_public_ip.PublicIP_0.fqdn}"
   }
 }
 

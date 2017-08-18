@@ -121,3 +121,7 @@ variable "imageOffer" {
 variable "ubuntuOSVersion" {
   default = "16.04-LTS"
 }
+
+variable "playbook_path" {
+  default = "../../../ansible-playbooks/one_click_multicloud/one_click_azure.yml"
+}

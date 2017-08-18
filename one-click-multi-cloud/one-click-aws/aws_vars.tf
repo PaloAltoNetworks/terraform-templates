@@ -7,6 +7,12 @@ variable "VPCName" {}
 variable "VPCCIDR" {}
 variable "ServerKeyName" {}
 variable "StackName" {}
+variable "admin_username" {
+  description = "The username to interact with the firewall"
+}
+variable "admin_password" {
+  description = "The password to interact with the firewall"
+}
 variable "PANFWRegionMap" {
   type = "map"
   default =
@@ -62,4 +68,8 @@ variable "UbuntuRegionMap" {
       "ca-central-1"   =  "ami-b3d965d7",
       "ap-south-1"     =  "ami-c2ee9dad"
   }
+}
+
+variable "playbook_path" {
+  default = "../../../ansible-playbooks/one_click_multicloud/one_click_aws.yml"
 }

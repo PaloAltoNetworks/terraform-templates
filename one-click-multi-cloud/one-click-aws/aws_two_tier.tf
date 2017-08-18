@@ -316,7 +316,7 @@ resource "null_resource" "configure_firewall" {
   }
 
   provisioner "local-exec" {
-    command = "./configure_firewall.sh ../../../ansible-playbooks/one_click_multicloud/one_click_aws.yml admin paloalto ${aws_eip.ManagementElasticIP.public_ip}"
+    command = "./configure_firewall.sh ${var.playbook_path} ${var.admin_username} ${var.admin_password} ${aws_eip.ManagementElasticIP.public_ip}"
   }
 }
 
