@@ -1,0 +1,1 @@
+ansible-playbook $1 --extra-vars "admin_username=$2 admin_password=$3 mgmt_ip=$4"
