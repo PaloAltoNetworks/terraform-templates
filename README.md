@@ -31,6 +31,10 @@ This repo contains the following sub repositories:
       - Deploy the Web instances into a secure subnet
       - Deploy the PAN FW with interfaces on the untrust, trust and management subnets.
 
+   - ``` Automated Terraform & Ansible One-click deployment for AWS and Azure```
+
+        [Terraform and Ansible Docker Container README](./Terraform_Container_Readme.md)
+
 Support:
 --------
 
