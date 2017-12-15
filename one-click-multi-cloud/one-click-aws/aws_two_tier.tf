@@ -232,13 +232,6 @@ resource "aws_instance" "FWInstance" {
   ami = "${var.PANFWRegionMap[var.aws_region]}"
   instance_type = "m4.xlarge"
 
-  ebs_block_device {
-    device_name = "/dev/xvda"
-    volume_type = "gp2"
-    delete_on_termination = true
-    volume_size = 60
-  }
-
   key_name = "${var.ServerKeyName}"
   monitoring = false
 
