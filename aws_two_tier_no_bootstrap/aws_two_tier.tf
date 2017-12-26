@@ -296,6 +296,7 @@ resource "null_resource" "install_application" {
   depends_on = ["null_resource.check_fw_ready"]
 }
 
+
 output "FirewallManagementURL" {
   value = "${join("", list("https://", "${aws_eip.ManagementElasticIP.public_ip}"))}"
 }
