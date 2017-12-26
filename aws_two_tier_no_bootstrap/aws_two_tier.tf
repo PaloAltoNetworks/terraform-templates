@@ -280,9 +280,22 @@ resource "null_resource" "check_fw_ready" {
   }
 
   provisioner "local-exec" {
-    command = "./check_fw.sh ${aws_eip.ManagementElasticIP.public_ip}"
+    command = "./check_fw_v2.sh ${aws_eip.ManagementElasticIP.public_ip}"
   }
 }
+
+resource "null_resource" "install_application" {
+  triggers {
+    key = "${aws_instance.FWInstance.id}"
+  }
+
+  provisioner "local-exec" {
+    command = "./apache_install.sh ${var.aws_key_pair_id} ${aws_eip.PublicElasticIP.public_ip}"
+  }
+  
+  depends_on = ["null_resource.check_fw_ready"]
+}
+
 
 output "FirewallManagementURL" {
   value = "${join("", list("https://", "${aws_eip.ManagementElasticIP.public_ip}"))}"
