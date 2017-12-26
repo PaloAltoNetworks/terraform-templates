@@ -284,6 +284,17 @@ resource "null_resource" "check_fw_ready" {
   }
 }
 
+resource "null_resource" "configure_firewall" {
+  depends_on = ["null_resource.check_fw_ready"]
+  triggers {
+    key = "${null_resource.check_fw_ready.id}"
+  }
+
+  provisioner "local-exec" {
+    command = "./configure_firewall.sh ${var.playbook_path} ${var.admin_username} ${var.admin_password} ${aws_eip.ManagementElasticIP.public_ip}"
+  }
+}
+
 resource "null_resource" "install_application" {
   triggers {
     key = "${aws_instance.FWInstance.id}"
@@ -293,7 +304,7 @@ resource "null_resource" "install_application" {
     command = "./apache_install.sh ${var.aws_key_pair_id} ${aws_eip.PublicElasticIP.public_ip}"
   }
   
-  depends_on = ["null_resource.check_fw_ready"]
+  depends_on = ["null_resource.configure_firewall"]
 }
 
 
