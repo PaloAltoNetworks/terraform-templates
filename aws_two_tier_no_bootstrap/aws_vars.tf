@@ -6,6 +6,7 @@ variable "VPCName" {}
 variable "VPCCIDR" {}
 variable "ServerKeyName" {}
 variable "StackName" {}
+variable "aws_key_pair_id" {}
 variable "PANFWRegionMap" {
   type = "map"
   default =
