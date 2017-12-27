@@ -69,8 +69,7 @@ which will do the following for you automatically:
 ### 3. AWS Key Pair Reference and Usage 
 
   - The private key associated with the deployment will be required during this deployment. 
-  - ### Please note the directory path and the file name of the AWS key pair shown below. These will either need to match as shown or be edited to match your file names\
-        and directory paths.
+  - ### Please note the directory path and the file name of the AWS key pair shown below. These will either need to match as shown or be edited to match your file names and directory paths.
   - This key is used and referenced in two files of this deployment:
     - /home/terraform-templates/aws_two_tier_no_bootstrap/terraform.tfvars
       - the path to the key pair needs to be specified as shown below:
