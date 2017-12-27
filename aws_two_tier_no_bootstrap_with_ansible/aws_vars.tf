@@ -17,20 +17,20 @@ variable "PANFWRegionMap" {
   type = "map"
   default =
     {
-      "us-west-2" = "ami-e614af86",
-      "ap-northeast-1" =   "ami-4bbcfa2c",
-      "us-west-1"      =   "ami-84a1fce4",
-      "ap-northeast-2" =   "ami-59419037",
-      "ap-southeast-1" =   "ami-17a41074",
-      "ap-southeast-2" =   "ami-10303673",
-      "eu-central-1"   =   "ami-e93df486",
-      "eu-west-1"      =   "ami-43f1aa25",
-      "eu-west-2"      =   "ami-d44d58b0",
-      "sa-east-1"      =   "ami-12b4d07e",
-      "us-east-1"      =   "ami-2127dc37",
-      "us-east-2"      =   "ami-810d28e4",
-      "ca-central-1"   =   "ami-6ebd000a",
-      "ap-south-1"     =   "ami-556a1b3a"
+      "us-west-2" = "ami-7e8a9107",
+      "ap-northeast-1" =   "ami-8705e6e1",
+      "us-west-1"      =   "ami-be88a1de",
+      "ap-northeast-2" =   "ami-48bc6526",
+      "ap-southeast-1" =   "ami-0994066a",
+      "ap-southeast-2" =   "ami-2ed3cc4d",
+      "eu-central-1"   =   "ami-44f25e2b",
+      "eu-west-1"      =   "ami-1c28c065",
+      "eu-west-2"      =   "ami-c76d7ca3",
+      "sa-east-1"      =   "ami-38641354",
+      "us-east-1"      =   "ami-34ca984f",
+      "us-east-2"      =   "ami-765e7e13",
+      "ca-central-1"   =   "ami-0504bb61",
+      "ap-south-1"     =   "ami-38fd8557"
     }
 }
 variable "WebServerRegionMap" {
