@@ -39,6 +39,10 @@ which will do the following for you automatically:
       for the deployment. 
     - Please make sure have Ansible installed on your system. 
 
+## Default username and password
+
+### Please note that the vars-sample.yml file has the username and password that will be used. Its highly recommended to changes these values to suit your needs and compliance requirements.
+
 ### 1. Terraform and Ansible Integration and Directory Layout Recommendation:
 
   The following directory layout is recommended:
