@@ -19,6 +19,15 @@ This repo contains the following sub repositories:
       - Deploy and Internal Load Balancer that site behind the PAN FW and fronts the web tier
       - Deploys the lambda functions to configure the PANFW's
 
+   - ``` aws_two_tier_no_bootstrap_with_ansible ```
+
+      - Deploy a two tier application
+      - Deploy the Web instances into a secure subnet
+      - Deploy the PAN FW with interfaces on the untrust, trust and management subnets.
+      - Deploy an application on the backend trust subnets.
+      - Configures the VM-Series with Ansible 
+      - Ansible is invoked directly from Terraform
+
    - ``` aws_two_tier ```
 
       - Deploy a two tier application
