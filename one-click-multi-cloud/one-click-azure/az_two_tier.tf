@@ -9,7 +9,8 @@ resource "azurerm_storage_account" "PAN_FW_STG_AC" {
   name = "${join("", list(var.StorageAccountName, substr(md5(azurerm_resource_group.PAN_FW_RG.id), 0, 4)))}"
   resource_group_name = "${azurerm_resource_group.PAN_FW_RG.name}"
   location = "${var.location}"
-  account_type = "${var.storageAccountType}"
+  account_replication_type = "LRS"
+  account_tier = "Standard"
 }
 
 resource "azurerm_public_ip" "PublicIP_0" {
