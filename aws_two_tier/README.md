@@ -11,7 +11,7 @@ Terraform Templates to Deploy Infrastructure onto AWS
 
   ```
       aws_two-tier/
-      - aws_two_tier.tf: Contains the definition of the various artifacts that will be deployed on Azure.
+      - aws_two_tier.tf: Contains the definition of the various artifacts that will be deployed on AWS.
       - aws_vars.tf: Define the various variables that will be required as inputs to the Terraform template.
       - terraform.tfvars: Defines default values for all the variables.
       - webserver_config_amzn_ami.sh: The commands to pass as userdata to be executed on an instance.

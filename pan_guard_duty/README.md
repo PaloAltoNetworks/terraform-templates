@@ -28,9 +28,9 @@ Terraform Templates to Deploy the Palo Alto Networks Integration with Guard Duty
 2. Credentials and Authentication:
 ----------------------------------
 
-  - Populate the file called ```aws_creds.tf ``` to provide the AWS ACCESS_KEY and SECRET_KEY.
+  - Populate the file called ``` aws_creds.tf ``` to provide the AWS ACCESS_KEY and SECRET_KEY.
 
-  - The structure of the ```aws_creds.tf``` file is shown below:
+  - The structure of the ``` aws_creds.tf ``` file is shown below:
 
     ```
         provider "aws" {
