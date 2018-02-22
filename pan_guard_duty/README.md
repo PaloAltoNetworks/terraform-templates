@@ -1,6 +1,9 @@
 Terraform Templates to Deploy the Palo Alto Networks Integration with Guard Duty
 --------------------------------------------------------------------------------
 
+![Alt text](terraform-templates/pan_guard_duty/pan-gd-arch.png?raw=true "Palo Alto VM-Series and Guard Duty Integration")
+
+
 0. PreRequisites:
 -------------
  - Please clone the repo using the link from github. 
