@@ -3,6 +3,7 @@ Terraform Templates to Deploy the Palo Alto Networks Integration with Guard Duty
 
 0. PreRequisites:
 -------------
+ - Please clone the repo using the link from github. 
  - Please see section 2 below pertaining to Credentials and Authentication.
  - Please see section 3 below about Configuring the S3 bucket.
  
