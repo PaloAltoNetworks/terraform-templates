@@ -64,6 +64,33 @@ Terraform Templates to Deploy the Palo Alto Networks Integration with Guard Duty
 4. Deploying the Lambda Functions
 
    - Once steps 2 and 3 have been completed the following command can be executed in order to deploy the lambda function. 
+
+   Important (2):
+   --------------
+   
+   - Please note that the Terraform Template allows the user to configure the following fields while deploying the 
+     integration with lambda functions and guard duty:
+     
+      - ``` FWIP ``` : ``` This is the management IP of the VM-Series FW to configure```
+      - ``` USERNAME ``` : ``` Username configured to access the Firewall```
+      - ``` PASSWORD ``` : ``` Password associated with the username ```
+      - ``` UNTRUST_ZONE ``` : ``` Name of the internet facing zone configured on the VM-Series Firewall ```
+      - ``` TRUST_ZONE ``` : ``` Name of the Trust zone configured on the VM-Series Firewall ```
+      - ``` SECURITY_RULE_NAME ``` : ``` Name of the security rule that will be created on the Firewall to ```
+                                     ``` to take the associated action on matching traffic ```
+      - ``` RULE_ACTION ``` : ``` The action to be associated with traffic that matches and hits the security ```
+                              ``` rule. Most likely drop or deny. ```   
+      - ``` GD_DAG_NAME```  : ``` Name of the dynamic address group which will be created to associate and ```
+                               ``` register IP's with. ```
+      - ``` FW_DAG_TAG ```  : ``` The tag to be associated with the Dynamic address group. ```
+                              ``` All IP's registered with this tag will be added to the ```
+                              ``` dynamic address group. ```
+   
+   Important (3):
+   --------------
+   
+   When deploying the terraform template, the user will be prompted to enter values for these fields
+   and customize to suit their purposes. 
    
    Deployment Command:
    -------------------
