@@ -1,0 +1,14 @@
+variable "aws_region" {}
+variable "GuardDutyBucketName" {}
+variable "GuardDutyObjectName" {}
+variable "FirewallMgmtIp" {}
+variable "FirewallUsername" {}
+variable "FirewallPassword" {}
+variable "guard_duty_function_name" {}
+variable "ZipFileName" {}
+variable "untrust_zone_name" {}
+variable "trust_zone_name" {}
+variable "security_rule_name" {}
+variable "rule_action" {}
+variable "guard_duty_dag_name" {}
+variable "tag_for_gd_ips" {}
