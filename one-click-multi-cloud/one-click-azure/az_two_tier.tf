@@ -254,9 +254,10 @@ resource "azurerm_network_interface" "VNIC1" {
   enable_ip_forwarding = true
   ip_configuration {
     name                          = "${join("", list("ipconfig", "1"))}"
-    subnet_id                     = "${azurerm_subnet.PAN_FW_Subnet2.id}"
+    subnet_id                     = "${azurerm_subnet.PAN_FW_Subnet1.id}"
     private_ip_address_allocation = "static"
-    private_ip_address = "${join("", list(var.IPAddressPrefix, ".2.4"))}"
+    private_ip_address = "${join("", list(var.IPAddressPrefix, ".1.4"))}"
+    public_ip_address_id = "${azurerm_public_ip.PublicIP_1.id}"
   }
 
   tags {
@@ -273,10 +274,9 @@ resource "azurerm_network_interface" "VNIC2" {
   enable_ip_forwarding = true
   ip_configuration {
     name                          = "${join("", list("ipconfig", "2"))}"
-    subnet_id                     = "${azurerm_subnet.PAN_FW_Subnet1.id}"
+    subnet_id                     = "${azurerm_subnet.PAN_FW_Subnet2.id}"
     private_ip_address_allocation = "static"
-    private_ip_address = "${join("", list(var.IPAddressPrefix, ".1.4"))}"
-    public_ip_address_id = "${azurerm_public_ip.PublicIP_1.id}"
+    private_ip_address = "${join("", list(var.IPAddressPrefix, ".2.4"))}"
   }
 
   tags {
@@ -362,6 +362,10 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
                            "${azurerm_network_interface.VNIC1.id}",
                            "${azurerm_network_interface.VNIC2.id}",
                           ]
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
 }
 
 resource "azurerm_virtual_machine" "PAN_FW_Web" {
@@ -398,6 +402,10 @@ resource "azurerm_virtual_machine" "PAN_FW_Web" {
   tags {
     environment = "staging"
   }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
 }
 
 resource "azurerm_virtual_machine" "PAN_FW_DB" {
@@ -433,6 +441,10 @@ resource "azurerm_virtual_machine" "PAN_FW_DB" {
 
   tags {
     environment = "staging"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
   }
 }
 

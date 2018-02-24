@@ -123,5 +123,5 @@ variable "ubuntuOSVersion" {
 }
 
 variable "playbook_path" {
-  default = "../../../ansible-playbooks/one_click_multicloud/one_click_azure.yml"
+  default = "../../../ansible-pan/ansible-playbooks/one_click_multicloud/one_click_azure.yml"
 }
