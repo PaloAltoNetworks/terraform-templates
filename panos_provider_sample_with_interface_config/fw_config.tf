@@ -176,16 +176,7 @@ resource "null_resource" "commit_fw" {
 /*    ======================================================================================= */
 
 
-/* Note: This configuration of the firewall is expected to be 
- *       used along with a bootstrap configuration which configures
- *       the network interfaces by associating them with the correct zones,
- *       once the zones have been created. The bootstrap process also 
- *       configures the username and password which will be used to 
- *       configure the firewall.
- */
-
-
-/* 
+/*
 resource "panos_service_object" "service_tcp_222" {
   name             = "service-tcp-222"
   vsys             = "vsys1"
@@ -232,8 +223,10 @@ resource "panos_nat_policy" "nat_rule_for_web_http2" {
   dat_port              = "80"
 
   depends_on = ["panos_service_object.http-81"]
-}
+}*/
 
+
+/*
 resource "panos_security_policies" "security_rules2" {
   rule {
     name                  = "web traffic 2"
