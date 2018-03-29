@@ -1,5 +1,5 @@
 provider "panos" {
-    hostname = ""
-    username = ""
-    password = ""
+  hostname = "${var.fw_ip}"
+  username = ""
+  password = ""
 }

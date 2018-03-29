@@ -23,9 +23,10 @@ resource "panos_ethernet_interface" "ethernet_1_2" {
 }
 
 resource "panos_virtual_router" "default_vr" {
-  name = "default"
+  name       = "default"
   interfaces = ["ethernet1/1", "ethernet1/2"]
-} 
+  depends_on = ["panos_ethernet_interface.ethernet_1_1", "panos_ethernet_interface.ethernet_1_2"]
+}
 
 resource "panos_zone" "external" {
   name       = "external"
@@ -152,5 +153,22 @@ resource "panos_security_policies" "security_rules" {
     action                = "deny"
   }
 
-  depends_on = ["panos_zone.external", "panos_zone.web"]
+  depends_on = ["panos_zone.external", "panos_zone.web", "panos_nat_policy.outbound_nat",
+    "panos_nat_policy.nat_rule_for_web_http",
+    "panos_nat_policy.nat_rule_for_web_ssh",
+    "panos_virtual_router.default_vr",
+  ]
 }
+
+/* 
+resource "null_resource" "commit_fw" {
+  triggers {
+    version = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "./commit.sh ${var.fw_ip}"
+  }
+}
+*/
+
