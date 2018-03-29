@@ -137,6 +137,7 @@ resource "panos_security_policies" "security_rules" {
     action                = "allow"
   }
 
+  /*
   rule {
     name                  = "web traffic 2"
     source_zones          = ["external"]
@@ -150,7 +151,8 @@ resource "panos_security_policies" "security_rules" {
     categories            = ["any"]
     action                = "allow"
   }
-
+   
+  
   rule {
     name                  = "ssh traffic2"
     source_zones          = ["external"]
@@ -164,6 +166,7 @@ resource "panos_security_policies" "security_rules" {
     categories            = ["any"]
     action                = "allow"
   }
+  */
 
   rule {
     name                  = "log default deny"
@@ -180,7 +183,6 @@ resource "panos_security_policies" "security_rules" {
     log_end               = true
     action                = "deny"
   }
-
   depends_on = ["panos_zone.external", "panos_zone.web", "panos_nat_policy.outbound_nat",
     "panos_nat_policy.nat_rule_for_web_http",
     "panos_nat_policy.nat_rule_for_web_ssh",
@@ -200,8 +202,11 @@ resource "null_resource" "commit_fw" {
 }
 */
 
+
 /*    ======================================================================================= */
 
+
+/*
 resource "panos_service_object" "service_tcp_222" {
   name             = "service-tcp-222"
   vsys             = "vsys1"
@@ -249,7 +254,7 @@ resource "panos_nat_policy" "nat_rule_for_web_http2" {
 
   depends_on = ["panos_service_object.http-81"]
 }
-
+*/
 /*
 resource "panos_security_policies" "security_rules2" {
   rule {
