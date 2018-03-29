@@ -138,17 +138,19 @@ resource "panos_security_policies" "security_rules" {
   }
 
   rule {
-    name                  = "web traffic 2"
+    name                  = "log default deny"
     source_zones          = ["external"]
     source_addresses      = ["any"]
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = ["web"]
     destination_addresses = ["any"]
-    applications          = ["web-browsing"]
-    services              = ["http-81"]
+    applications          = ["any"]
+    services              = ["any"]
     categories            = ["any"]
-    action                = "allow"
+    log_start             = true
+    log_end               = true
+    action                = "deny"
   }
 
   depends_on = ["panos_zone.external", "panos_zone.web", "panos_nat_policy.outbound_nat",
