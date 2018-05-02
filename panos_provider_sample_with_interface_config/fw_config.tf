@@ -51,7 +51,7 @@ resource "panos_service_object" "service_tcp_221" {
 resource "panos_nat_policy" "nat_rule_for_web_ssh" {
   name                  = "web_ssh"
   source_zones          = ["${panos_zone.external.name}"]
-  destination_zone      = "${panos_zone.web.name}"
+  destination_zone      = "${panos_zone.external.name}"
   source_addresses      = ["any"]
   destination_addresses = ["10.0.0.100"]
   service               = "${panos_service_object.service_tcp_221.name}"
@@ -65,7 +65,7 @@ resource "panos_nat_policy" "nat_rule_for_web_ssh" {
 resource "panos_nat_policy" "nat_rule_for_web_http" {
   name                  = "web_http"
   source_zones          = ["${panos_zone.external.name}"]
-  destination_zone      = "${panos_zone.web.name}"
+  destination_zone      = "${panos_zone.external.name}"
   source_addresses      = ["any"]
   destination_addresses = ["10.0.0.100"]
   service               = "service-http"
@@ -78,7 +78,7 @@ resource "panos_nat_policy" "nat_rule_for_web_http" {
 
 resource "panos_nat_policy" "outbound_nat" {
   name                  = "NATAllOut"
-  source_zones          = ["${panos_zone.web.name}"]
+  source_zones          = ["${panos_zone.external.name}"]
   destination_zone      = "${panos_zone.external.name}"
   source_addresses      = ["any"]
   destination_addresses = ["any"]
