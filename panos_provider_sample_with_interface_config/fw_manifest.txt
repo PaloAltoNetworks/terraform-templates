@@ -3,3 +3,4 @@ Trigger FW build #3
 Reset system to defaults in prep for next deployment in prep for #4.
 Trigger FW build #4
 Resetting the fw's for code run #5
+Trigger pipeline reset
