@@ -200,7 +200,7 @@ resource "null_resource" "commit_fw" {
 }
 
 /*    ======================================================================================= */
-
+/*
 resource "panos_service_object" "service_tcp_222" {
   name             = "service-tcp-222"
   vsys             = "vsys1"
@@ -248,3 +248,5 @@ resource "panos_nat_policy" "nat_rule_for_web_http2" {
 
   depends_on = ["panos_service_object.http-81"]
 }
+*/
+
