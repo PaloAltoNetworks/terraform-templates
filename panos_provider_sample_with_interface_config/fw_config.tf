@@ -137,6 +137,7 @@ resource "panos_security_policies" "security_rules" {
     action                = "allow"
   }
 
+  /*
   rule {
     name                  = "web traffic 2"
     source_zones          = ["external"]
@@ -164,6 +165,7 @@ resource "panos_security_policies" "security_rules" {
     categories            = ["any"]
     action                = "allow"
   }
+  */
 
   rule {
     name                  = "log default deny"
@@ -180,7 +182,6 @@ resource "panos_security_policies" "security_rules" {
     log_end               = true
     action                = "deny"
   }
-
   depends_on = ["panos_zone.external", "panos_zone.web", "panos_nat_policy.outbound_nat",
     "panos_nat_policy.nat_rule_for_web_http",
     "panos_nat_policy.nat_rule_for_web_ssh",
@@ -188,7 +189,6 @@ resource "panos_security_policies" "security_rules" {
   ]
 }
 
-/* 
 resource "null_resource" "commit_fw" {
   triggers {
     version = "${timestamp()}"
@@ -198,7 +198,6 @@ resource "null_resource" "commit_fw" {
     command = "./commit.sh ${var.fw_ip}"
   }
 }
-*/
 
 /*    ======================================================================================= */
 
@@ -249,40 +248,3 @@ resource "panos_nat_policy" "nat_rule_for_web_http2" {
 
   depends_on = ["panos_service_object.http-81"]
 }
-
-/*
-resource "panos_security_policies" "security_rules2" {
-  rule {
-    name                  = "web traffic 2"
-    source_zones          = ["external"]
-    source_addresses      = ["any"]
-    source_users          = ["any"]
-    hip_profiles          = ["any"]
-    destination_zones     = ["web"]
-    destination_addresses = ["any"]
-    applications          = ["web-browsing"]
-    services              = ["http-81"]
-    categories            = ["any"]
-    action                = "allow"
-  }
-
-  rule {
-    name                  = "ssh traffic2"
-    source_zones          = ["external"]
-    source_addresses      = ["any"]
-    source_users          = ["any"]
-    hip_profiles          = ["any"]
-    destination_zones     = ["web"]
-    destination_addresses = ["any"]
-    applications          = ["any"]
-    services              = ["service-tcp-222"]
-    categories            = ["any"]
-    action                = "allow"
-  }
-
-  depends_on = ["panos_nat_policy.nat_rule_for_web_http2",
-    "panos_nat_policy.nat_rule_for_web_ssh2",
-  ]
-}
-*/
-
