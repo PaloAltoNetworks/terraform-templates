@@ -35,14 +35,13 @@ RUN echo "===> Installing Terraform..."  && \
 
 
 RUN echo "===> Cloning ansible-pan repo..."  && \
-    git clone https://github.com/PaloAltoNetworks/ansible-pan.git  &&\
+    git clone https://github.com/PaloAltoNetworks/ansible-pan.git  && \
     echo "===> Install PaloAltoNetworks from ansible-galaxy..."  && \
     ansible-galaxy install PaloAltoNetworks.paloaltonetworks
 
-RUN echo "===> Copying terraform-templates reop..."
-COPY . /terraform-templates
-
-RUN echo "===> initializing one click AWS terraform template..."  && \
+RUN echo "===> Copying terraform-templates reop..."  && \
+    git clone https://github.com/PaloAltoNetworks/terraform-templates.git  && \
+    echo "===> initializing one click AWS terraform template..."  && \
     cd /terraform-templates/one-click-multi-cloud/one-click-aws && \
     terraform init && \
     echo "===> initializing one click Azure terraform template..."  && \
