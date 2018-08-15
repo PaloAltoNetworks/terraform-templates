@@ -5,7 +5,7 @@ all the tools and scripts needed to automatically deploy the PANW cloud infrastr
 
 ### How to build the container
 
-This images is on Dockerhub at `gunjan5/terraform_ansible` if you don't want to build it locally. 
+This image is on Dockerhub at [`gunjan5/terraform_ansible`](https://hub.docker.com/r/gunjan5/terraform_ansible/) if you don't want to build it locally. 
 Run the following command to pull the image.
 
 `docker pull gunjan5/terraform_ansible:latest`
