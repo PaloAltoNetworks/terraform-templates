@@ -22,6 +22,6 @@ jobs:
 
       - run: |
           TAG=${CIRCLE_SHA1}
-          docker build -t paloaltonetworks/terraform_ansible:${TAG} ./automation-container/
+          docker build -t paloaltonetworks/terraform_ansible:${TAG} automation-container/
           docker login -u ${DOCKER_BOT_USER} -p ${DOCKER_BOT_PASSWORD}     
           docker push paloaltonetworks/terraform_ansible:${TAG}
