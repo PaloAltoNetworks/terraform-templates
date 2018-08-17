@@ -20,10 +20,11 @@ jobs:
       # - run: go get -v -t -d ./...
       # - run: go test -v ./...
 
+      - setup_remote_docker:
+          docker_layer_caching: true
+
       - run: |
           TAG=${CIRCLE_SHA1}
-          pwd
-          ls -la
           docker build -t paloaltonetworks/terraform_ansible:${TAG} automation_container/
           docker login -u ${DOCKER_BOT_USER} -p ${DOCKER_BOT_PASSWORD}     
           docker push paloaltonetworks/terraform_ansible:${TAG}
