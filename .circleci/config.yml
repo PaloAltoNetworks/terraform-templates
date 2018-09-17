@@ -1,0 +1,32 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.9
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+
+    working_directory: /go/src/github.com/PaloAltoNetworks/terraform-templates
+    steps:
+      - checkout
+
+      # specify any bash command here prefixed with `run: `
+      # - run: go get -v -t -d ./...
+      # - run: go test -v ./...
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run: |
+          TAG=${CIRCLE_SHA1}
+          docker build -t paloaltonetworks/terraform_ansible:${TAG} automation_container/
+          docker login -u ${DOCKER_BOT_USER} -p ${DOCKER_BOT_PASSWORD}
+          docker tag paloaltonetworks/terraform_ansible:${TAG} paloaltonetworks/terraform_ansible:latest  
+          docker push paloaltonetworks/terraform_ansible:${TAG}
+          docker push paloaltonetworks/terraform_ansible:latest
