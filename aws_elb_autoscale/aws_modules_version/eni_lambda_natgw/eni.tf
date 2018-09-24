@@ -15,5 +15,5 @@ resource "aws_lambda_function" "AddENILambdaN" {
 }
 
 output "add_eni_lambdan_arn" {
-  value = "${aws_lambda_function.AddENILambdaN.arn}"
+  value = "${element(concat(aws_lambda_function.AddENILambdaN.*.arn, list("")), 0)}"
 }

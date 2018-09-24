@@ -18,7 +18,7 @@ resource "aws_subnet" "LambdaSubnetAz1" {
   count = "${var.NATGateway}"
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.LambdaSubnetIpBlocks[0]}"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
   tags {
         "Application" = "AWS::StackId"
@@ -34,7 +34,7 @@ resource "aws_subnet" "LambdaSubnetAz2" {
   count = "${var.NATGateway}"
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.LambdaSubnetIpBlocks[1]}"
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
   tags {
         "Application" = "${var.StackName}"
@@ -114,7 +114,7 @@ resource "aws_route_table" "LambdaRouteTableAz4" {
 
 resource "aws_subnet" "NATGWSubnetAz1" {
   count = "${var.NATGateway}"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "us-east-1a"
   cidr_block = "${var.NATGWSubnetIpBlocks[0]}"
   map_public_ip_on_launch = true
   vpc_id = "${aws_vpc.main.id}"
@@ -128,7 +128,7 @@ resource "aws_subnet" "NATGWSubnetAz1" {
 
 resource "aws_subnet" "NATGWSubnetAz2" {
   count = "${var.NATGateway}"
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "us-east-1b"
   cidr_block = "${var.NATGWSubnetIpBlocks[1]}"
   map_public_ip_on_launch = true
   vpc_id = "${aws_vpc.main.id}"
@@ -222,7 +222,7 @@ resource "aws_nat_gateway" "NAT4" {
 }
 
 resource "aws_subnet" "MGMTSubnetAz1" {
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
   vpc_id = "${aws_vpc.main.id}"
   cidr_block = "${var.MgmtSubnetIpBlocks[0]}"
@@ -234,7 +234,7 @@ resource "aws_subnet" "MGMTSubnetAz1" {
 }
 
 resource "aws_subnet" "MGMTSubnetAz2" {
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
   vpc_id = "${aws_vpc.main.id}"
   cidr_block = "${var.MgmtSubnetIpBlocks[1]}"
@@ -570,7 +570,7 @@ resource "aws_subnet" "UNTRUSTSubnet1" {
 
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.UntrustSubnetIpBlocks[0]}"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "us-east-1a"
   tags {
         "Application" = "${var.StackName}"
         "Network"= "UntrustSubnet1"
@@ -584,7 +584,7 @@ resource "aws_subnet" "UNTRUSTSubnet2" {
 
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.UntrustSubnetIpBlocks[1]}"
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "us-east-1b"
   tags {
         "Application" = "${var.StackName}"
         "Network"= "UntrustSubnet2"
@@ -663,7 +663,7 @@ resource "aws_subnet" "TRUSTSubnet1" {
 
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.TrustSubnetIpBlocks[0]}"
-  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone = "us-east-1a"
   tags {
         "Application" = "${var.StackName}"
         "Network"= "TrustSubnet1"
@@ -677,7 +677,7 @@ resource "aws_subnet" "TRUSTSubnet2" {
 
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.TrustSubnetIpBlocks[1]}"
-  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  availability_zone = "us-east-1b"
   tags {
         "Application" = "${var.StackName}"
         "Network"= "TrustSubnet2"
@@ -1008,8 +1008,8 @@ resource "aws_autoscaling_group" "WebServerGroup" {
                 "aws_internet_gateway.InternetGateway",
                 "aws_subnet.TRUSTSubnet1", "aws_subnet.TRUSTSubnet2"]
 
-  availability_zones        = ["${data.aws_availability_zones.available.names[0]}",
-                                "${data.aws_availability_zones.available.names[1]}"
+  availability_zones        = ["us-east-1a",
+                                "us-east-1b"
                               ]
   name                      = "WebServerGroup"
   max_size                  = "6"
@@ -1225,31 +1225,33 @@ resource "aws_cloudwatch_metric_alarm" "CPUAlarmLow3" {
 }
 
 output "LambdaSubnetAz1" {
-  value = "${aws_subnet.LambdaSubnetAz1.id}"
+  value = "${aws_subnet.LambdaSubnetAz1.*.id}"
 }
 
 output "LambdaSubnetAz2" {
-  value = "${aws_subnet.LambdaSubnetAz2.id}"
+  value = "${element(concat(aws_subnet.LambdaSubnetAz2.*.id, list("")), 0)}"
 }
 
 output "LambdaSubnetAz3" {
-  value = "${aws_subnet.LambdaSubnetAz3.id}"
+  value = "${element(concat(aws_subnet.LambdaSubnetAz3.*.id, list("")), 0)}"
 }
 
 output "LambdaSubnetAz4" {
-  value = "${aws_subnet.LambdaSubnetAz4.id}"
+  value = "${element(concat(aws_subnet.LambdaSubnetAz4.*.id, list("")), 0)}"
 }
 
 output "NATGWSubnetAz1" {
   value = "${aws_subnet.NATGWSubnetAz1.id}"
+  value = "${element(concat(aws_subnet.NATGWSubnetAz1.*.id, list("")), 0)}"
 }
 
 output "NATGWSubnetAz2" {
   value = "${aws_subnet.NATGWSubnetAz2.id}"
+  value = "${element(concat(aws_subnet.NATGWSubnetAz2.*.id, list("")), 0)}"
 }
 
 output "NATGWSubnetAz3" {
-  value = "${aws_subnet.NATGWSubnetAz3.id}"
+  value = "${element(concat(aws_subnet.NATGWSubnetAz3.*.id, list("")), 0)}"
 }
 
 output "MGMTSubnetAz1" {
@@ -1261,7 +1263,7 @@ output "MGMTSubnetAz2" {
 }
 
 output "MGMTSubnetAz3" {
-  value = "${aws_subnet.MGMTSubnetAz3.id}"
+  value = "${element(concat(aws_subnet.MGMTSubnetAz3.*.id, list("")), 0)}"
 }
 
 output "UNTRUSTSubnet1" {
@@ -1273,7 +1275,7 @@ output "UNTRUSTSubnet2" {
 }
 
 output "UNTRUSTSubnet3" {
-  value = "${aws_subnet.UNTRUSTSubnet3.id}"
+  value = "${element(concat(aws_subnet.UNTRUSTSubnet3.*.id, list("")), 0)}"
 }
 
 output "TRUSTSubnet1" {
@@ -1285,7 +1287,7 @@ output "TRUSTSubnet2" {
 }
 
 output "TRUSTSubnet3" {
-  value = "${aws_subnet.TRUSTSubnet3.id}"
+  value = "${element(concat(aws_subnet.TRUSTSubnet3.*.id, list("")), 0)}"
 }
 
 output "VPCCIDR" {

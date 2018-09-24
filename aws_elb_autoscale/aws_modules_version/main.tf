@@ -88,5 +88,4 @@ module "vpc" {
 
 module "sqs" {
   source = "./sqs"
-  aws_region = "${var.aws_region}"
 }
