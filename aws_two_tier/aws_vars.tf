@@ -7,6 +7,7 @@ variable "VPCName" {}
 variable "VPCCIDR" {}
 variable "ServerKeyName" {}
 variable "StackName" {}
+variable "fw_instance_size" {}
 variable "PANFWRegionMap" {
   type = "map"
   default =

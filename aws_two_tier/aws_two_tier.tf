@@ -230,7 +230,7 @@ resource "aws_instance" "FWInstance" {
   instance_initiated_shutdown_behavior = "stop"
   ebs_optimized = true
   ami = "${var.PANFWRegionMap[var.aws_region]}"
-  instance_type = "m4.xlarge"
+  instance_type = "${var.fw_instance_size}"
 
   ebs_block_device {
     device_name = "/dev/xvda"
