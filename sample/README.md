@@ -7,11 +7,30 @@ deploy_vpc.tf - Terraform template for create a VPC on AWS.  The VPC will create
 variables.tf - Variables you can set for the deployment
 
 
-Before deploying the template, you need to modify the variables.tf file to set the AWS access key and secret key.  The template is also setup to deploy in US East Region.
+Before deploying the template, you need to create a terraform.tfvars file to set the AWS access key and secret key. 
+ The template is also setup to deploy in US East Region.
+ 
+Example terraform.tfvars content:
+
+```bash
+access_key="YOURKEYHERE"
+secret_key="YOURSECRETHERE"
+pavm_key_name="KEYPAIR"
+pavm_key_path="~/keys/KEYPAIR.pem"
+region="us-east-2"
+availability_zone="us-east-2b"
+pavm_bootstrap_s3="BOOTSTRAP_BUCKET_NAME"
+```
+
+Refer to https://panos-bootstrapper.readthedocs.io/en/latest/ for information on building a valid S3 Bootstrap bucket. 
 
 To deploy using Terraform, download and install Terraform from terraform.io.
 
 Commands to deploy
+
+Run terraform init to initialize the terraform state and download the aws plugin.
+
+`$ terraform init`
 
 Run terraform plan to validate the template and see the preview of the objects that will be created on AWS.
 
@@ -28,3 +47,8 @@ To clean up the deployment, just run the following command
 it will automatically delete every object that was created by the template.
 
 If you don’t want to deploy the VM-Series firewall, just rename the deploy_pavm.tf file extension to something else.
+
+# Troubleshooting
+
+The first time you deploy this project, you may get an error that you need to 'Opt In' to the Palo Alto Networks VM-Series
+licensing agreement. Just follow the link provided to accept the agreement, wait 3-4 minutes, then try again. 
