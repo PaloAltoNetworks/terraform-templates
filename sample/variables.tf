@@ -1,6 +1,6 @@
 # AWS Credential
 variable "access_key" {
-    decscription = "AWS Access Key"
+    description = "AWS Access Key"
     default = ""
 }
 variable "secret_key" {
@@ -47,6 +47,7 @@ variable "trust_subnet_cidr_block" {
 
 # PAVM configuration
 variable "pavm_payg_bun2_ami_id" {
+//    type = map
     default = {
         eu-west-1 = "ami-5d92132e",
         ap-southeast-1 = "ami-946da7f7",
@@ -57,11 +58,13 @@ variable "pavm_payg_bun2_ami_id" {
         us-east-1 = "ami-29a8a243",
         us-west-1 = "ami-12d0ad72",
         sa-east-1 = "ami-19810e75",
-        us-west-2 = "ami-e4be4b84"
+        us-west-2 = "ami-e4be4b84",
+        us-east-2 = "ami-9ef3c5fb"
     }
 }
 
 variable "pavm_byol_ami_id" {
+//    type = map
     default = {
         ap-south-1 = "ami-5c187233",
         eu-west-1 = "ami-73971600",
@@ -73,8 +76,10 @@ variable "pavm_byol_ami_id" {
         us-east-1 = "ami-1daaa077",
         us-west-1 = "ami-acd7aacc",
         sa-east-1 = "ami-1d860971",
-        us-west-2 = "ami-e7be4b87"
+        us-west-2 = "ami-e7be4b87",
+        us-east-2 = "ami-11e1d774"
     }
+
 }
 
 variable "pavm_instance_type" {
@@ -107,11 +112,6 @@ variable "pavm_trust_private_ip" {
     default = "10.88.66.220"
 }
 
-variable "pavm_user_data" {
-    #default = "vmseries-bootstrap-aws-s3bucket=panw-mlue-bucket"
-    default = ""
-}
-
-variable "pavm_iam_instance_profile" {
-    default = "pa_bootstrap_s3_readonly"
+variable pavm_bootstrap_s3 {
+    default = "pavm-bootstrap-bucket"
 }
