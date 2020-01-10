@@ -31,18 +31,21 @@ variable "PANFWRegionMap" {
 }
 variable "WebServerRegionMap" {
   type = "map"
+  description = "amazon linux ami amzn-ami-hvm-2018.03.0.20190826-x86_64-gp2 released on 08-26-2019"
   default = {
-    "us-east-1"        = "ami-1ecae776",
-    "us-east-2"        = "ami-c55673a0",
-    "us-west-2"        = "ami-e7527ed7",
-    "us-west-1"        = "ami-d114f295",
-    "eu-west-1"        = "ami-a10897d6",
-    "eu-central-1"     = "ami-a8221fb5",
-    "ap-northeast-1"   = "ami-cbf90ecb",
-    "ap-southeast-1"   = "ami-68d8e93a",
-    "ap-southeast-2"   = "ami-fd9cecc7",
-    "sa-east-1"        = "ami-b52890a8",
-    "cn-north-1"       = "ami-f239abcb"
+    "us-east-1"        = "ami-00eb20669e0990cb4",
+    "us-east-2"        = "ami-0c64dd618a49aeee8",
+    "us-west-2"        = "ami-08d489468314a58df",
+    "us-west-1"        = "ami-0bce08e823ed38bdd",
+    "eu-west-1"        = "ami-028188d9b49b32a80",
+    "eu-west-2"        = "ami-04de2b60dd25fbb2e",
+    "eu-central-1"     = "ami-010fae13a16763bb4",
+    "ap-northeast-1"   = "ami-0ab3e16f9c414dee7",
+    "ap-southeast-1"   = "ami-05c859630889c79c8",
+    "ap-southeast-2"   = "ami-07cc15c3ba6f8e287",
+    "sa-east-1"        = "ami-0e2c2c29d8017dd99",
+    "ca-central-1"     = "ami-04070f04f450607dc",
+    "ap-south-1"       = "ami-02913db388613c3e1"
   }
 }
 
