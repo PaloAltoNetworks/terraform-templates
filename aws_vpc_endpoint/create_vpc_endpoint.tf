@@ -34,6 +34,6 @@ output "network_interface_ids" {
   value = "${aws_vpc_endpoint.custom_vpc_endpoint.network_interface_ids}"
 }
 
-output "dns_entry" {
+output "_dns_entry" {
   value = "${aws_vpc_endpoint.custom_vpc_endpoint.dns_entry}"
 }
