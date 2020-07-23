@@ -20,17 +20,17 @@ resource "aws_instance" "pavm" {
     }
     root_block_device = {
         volume_type = "gp2"
-        volume_size = "40"
+        volume_size = "65"
         delete_on_termination = true
     }
 
     connection {
         user = "admin"
-        key_file = "${var.pavm_key_path}"
+        private_key = "${var.pavm_key_path}"
     }
     # bootstrap
-    user_data = "${var.pavm_user_data}"
-    iam_instance_profile = "${var.pavm_iam_instance_profile}"
+    user_data = "vmseries-bootstrap-aws-s3bucket=${var.pavm_bootstrap_s3}"
+    iam_instance_profile = "bootstrap_s3_profile"
 }
 
 # Untrust Interface
@@ -73,6 +73,55 @@ resource "aws_network_interface" "trust_eni" {
         instance = "${aws_instance.pavm.id}"
         device_index = 2
     }
+}
+resource "aws_iam_instance_profile" "bootstrap_s3_profile" {
+  name = "bootstrap_s3_profile"
+  role = "${aws_iam_role.bootstrap_s3_role.name}"
+}
+
+resource "aws_iam_role" "bootstrap_s3_role" {
+  name = "bootstrap_s3_role"
+  path = "/"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource aws_iam_role_policy "bootstrap_s3_role_policy" {
+  name = "test_policy"
+  role = "${aws_iam_role.bootstrap_s3_role.id}"
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${var.pavm_bootstrap_s3}",
+                "arn:aws:s3:::${var.pavm_bootstrap_s3}/*"
+            ]
+        }
+    ]
+}
+EOF
 }
 
 # Output data
