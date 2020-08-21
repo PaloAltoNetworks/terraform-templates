@@ -2,7 +2,17 @@
 Using the AzCLI, accept the offer terms prior to deployment. This only
 need to be done once per subscription
 ```
-az vm image terms accept --urn paloaltonetworks:vmseries1:bundle2:latest
+az login
+View available images (see available versions)
+  az vm image list -p paloaltonetworks --all
+View available offers (shows the available images in your selected region)
+  az vm image list-offers --publisher paloaltonetworks --location westus2
+View available Skus 
+  az vm image list-skus --publisher paloaltonetworks --location westus2 --offer vmseries1
+
+Accept the Terms
+URN format --urn publisher:offer:sku:version
+  az vm image terms accept --urn paloaltonetworks:vmseries1:bundle2:latest
 ```
 */
 # This file defines the various resources that will be deployed against Azure.
@@ -16,7 +26,6 @@ terraform {
     }
   }
 }
-
 
 resource "azurerm_resource_group" "PAN_FW_RG" {
   name = var.resource_group_name
@@ -370,7 +379,7 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
     publisher = var.fwPublisher
     offer     = var.fwOffer
     sku       = var.fwSku
-    version   = "9.1.0"
+    version   = "latest"
   }
 
   storage_os_disk {
