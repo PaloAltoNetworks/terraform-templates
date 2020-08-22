@@ -14,6 +14,8 @@ Accept the Terms
 URN format --urn publisher:offer:sku:version
   az vm image terms accept --urn paloaltonetworks:vmseries1:bundle2:latest
 ```
+See Readme for additional information
+  
 */
 # This file defines the various resources that will be deployed against Azure.
 terraform {
