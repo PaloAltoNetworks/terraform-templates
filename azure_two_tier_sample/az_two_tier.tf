@@ -5,9 +5,18 @@ need to be done once per subscription
 az vm image terms accept --urn paloaltonetworks:vmseries1:bundle2:latest
 ```
 */
+# Configure the Azure provider
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = ">= 2.13.0"
+    }
+  }
+}
 
 provider "azurerm" {
-  version = "=2.13.0"
+#  version = "=2.13.0"
   features {}
 }
 
@@ -201,7 +210,7 @@ resource "azurerm_virtual_network" "PAN_FW_VNET" {
 resource "azurerm_subnet" "PAN_FW_Subnet0" {
   name           = var.subnet0Name
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  address_prefix = join("", list(var.IPAddressPrefix, ".0.0/24"))
+  address_prefixes = [join("", list(var.IPAddressPrefix, ".0.0/24"))]
   virtual_network_name = azurerm_virtual_network.PAN_FW_VNET.name
 }
 
@@ -213,7 +222,7 @@ resource "azurerm_subnet_network_security_group_association" "example" {
 resource "azurerm_subnet" "PAN_FW_Subnet1" {
   name           = var.subnet1Name
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  address_prefix = join("", list(var.IPAddressPrefix, ".1.0/24"))
+  address_prefixes = [join("", list(var.IPAddressPrefix, ".1.0/24"))]
   virtual_network_name = azurerm_virtual_network.PAN_FW_VNET.name
 }
 
@@ -225,21 +234,21 @@ resource "azurerm_subnet_network_security_group_association" "example1" {
 resource "azurerm_subnet" "PAN_FW_Subnet3" {
   name           = var.subnet3Name
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  address_prefix = join("", list(var.IPAddressPrefix, ".3.0/24"))
+  address_prefixes = [join("", list(var.IPAddressPrefix, ".3.0/24"))]
   virtual_network_name = azurerm_virtual_network.PAN_FW_VNET.name
 }
 
 resource "azurerm_subnet" "PAN_FW_Subnet4" {
   name           = var.subnet4Name
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  address_prefix = join("", list(var.IPAddressPrefix, ".4.0/24"))
+  address_prefixes = [join("", list(var.IPAddressPrefix, ".4.0/24"))]
   virtual_network_name = azurerm_virtual_network.PAN_FW_VNET.name
 }
 
 resource "azurerm_subnet" "PAN_FW_Subnet2" {
   name           = var.subnet2Name
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  address_prefix = join("", list(var.IPAddressPrefix, ".2.0/24"))
+  address_prefixes = [join("", list(var.IPAddressPrefix, ".2.0/24"))]
   virtual_network_name = azurerm_virtual_network.PAN_FW_VNET.name
 }
 
@@ -252,8 +261,8 @@ resource "azurerm_network_interface" "VNIC0" {
   name                = join("", list("FW", var.nicName, "0"))
   location            = var.location
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  depends_on          = ["azurerm_virtual_network.PAN_FW_VNET",
-                          "azurerm_public_ip.PublicIP_0"]
+  depends_on          = [azurerm_virtual_network.PAN_FW_VNET,
+                          azurerm_public_ip.PublicIP_0]
 
   ip_configuration {
     name                          = join("", list("ipconfig", "0"))
@@ -272,7 +281,7 @@ resource "azurerm_network_interface" "VNIC1" {
   name                = join("", list("FW", var.nicName, "1"))
   location            = var.location
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  depends_on          = ["azurerm_virtual_network.PAN_FW_VNET"]
+  depends_on          = [azurerm_virtual_network.PAN_FW_VNET]
 
   enable_ip_forwarding = true
   ip_configuration {
@@ -292,7 +301,7 @@ resource "azurerm_network_interface" "VNIC2" {
   name                = join("", list("FW", var.nicName, "2"))
   location            = var.location
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  depends_on          = ["azurerm_virtual_network.PAN_FW_VNET"]
+  depends_on          = [azurerm_virtual_network.PAN_FW_VNET]
 
   enable_ip_forwarding = true
   ip_configuration {
@@ -311,7 +320,7 @@ resource "azurerm_network_interface" "VNIC0_Web" {
   name                = join("", list("Web", var.nicName, "0"))
   location            = var.location
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  depends_on          = ["azurerm_virtual_network.PAN_FW_VNET"]
+  depends_on          = [azurerm_virtual_network.PAN_FW_VNET]
 
   ip_configuration {
     name                          = join("", list("ipconfig", "3"))
@@ -329,7 +338,7 @@ resource "azurerm_network_interface" "VNIC0_DB" {
   name                = join("", list("DB", var.nicName, "0"))
   location            = var.location
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
-  depends_on          = ["azurerm_virtual_network.PAN_FW_VNET"]
+  depends_on          = [azurerm_virtual_network.PAN_FW_VNET]
 
   ip_configuration {
     name                          = join("", list("ipconfig", "4"))
@@ -350,9 +359,9 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
   resource_group_name   = azurerm_resource_group.PAN_FW_RG.name
   vm_size               = var.FirewallVmSize
 
-  depends_on = ["azurerm_network_interface.VNIC0",
-                "azurerm_network_interface.VNIC1",
-                "azurerm_network_interface.VNIC2"
+  depends_on = [azurerm_network_interface.VNIC0,
+                azurerm_network_interface.VNIC1,
+                azurerm_network_interface.VNIC2
                 ]
   plan {
     name = var.fwSku
@@ -397,8 +406,8 @@ resource "azurerm_virtual_machine" "PAN_FW_Web" {
   resource_group_name   = azurerm_resource_group.PAN_FW_RG.name
   vm_size               = var.gvmSize
 
-  depends_on = ["azurerm_network_interface.VNIC0", "azurerm_network_interface.VNIC1",
-                  "azurerm_network_interface.VNIC2"]
+  depends_on = [azurerm_network_interface.VNIC0, azurerm_network_interface.VNIC1,
+                  azurerm_network_interface.VNIC2]
 
   storage_image_reference {
     publisher = var.imagePublisher
@@ -437,8 +446,8 @@ resource "azurerm_virtual_machine" "PAN_FW_DB" {
   resource_group_name   = azurerm_resource_group.PAN_FW_RG.name
   vm_size               = var.gvmSize
 
-  depends_on = ["azurerm_network_interface.VNIC0", "azurerm_network_interface.VNIC1",
-                  "azurerm_network_interface.VNIC2", "azurerm_network_interface.VNIC0_DB"]
+  depends_on = [azurerm_network_interface.VNIC0, azurerm_network_interface.VNIC1,
+                  azurerm_network_interface.VNIC2, azurerm_network_interface.VNIC0_DB]
 
   storage_image_reference {
     publisher = var.imagePublisher
@@ -525,13 +534,13 @@ resource "azurerm_template_deployment" "DBlinkedTemplate" {
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
 
   depends_on = [
-    "azurerm_virtual_machine_extension.PAN_FW_DB_EXT",
-    "azurerm_virtual_machine_extension.PAN_FW_WEB_EXT_MIN",
-    "azurerm_virtual_network.PAN_FW_VNET",
-    "azurerm_network_interface.VNIC0_DB",
-    "azurerm_network_interface.VNIC0_Web",
-    "azurerm_route_table.PAN_FW_RT_Web",
-    "azurerm_route_table.PAN_FW_RT_DB"
+    azurerm_virtual_machine_extension.PAN_FW_DB_EXT,
+    azurerm_virtual_machine_extension.PAN_FW_WEB_EXT_MIN,
+    azurerm_virtual_network.PAN_FW_VNET,
+    azurerm_network_interface.VNIC0_DB,
+    azurerm_network_interface.VNIC0_Web,
+    azurerm_route_table.PAN_FW_RT_Web,
+    azurerm_route_table.PAN_FW_RT_DB
   ]
   parameters = {
     name = join("/", list(azurerm_virtual_network.PAN_FW_VNET.name, azurerm_subnet.PAN_FW_Subnet4.name))
@@ -583,7 +592,7 @@ resource "azurerm_template_deployment" "WeblinkedTemplate" {
   resource_group_name = azurerm_resource_group.PAN_FW_RG.name
 
   depends_on = [
-    "azurerm_template_deployment.DBlinkedTemplate"
+    azurerm_template_deployment.DBlinkedTemplate
   ]
   parameters = {
     name = join("/", list(azurerm_virtual_network.PAN_FW_VNET.name,azurerm_subnet.PAN_FW_Subnet3.name))
