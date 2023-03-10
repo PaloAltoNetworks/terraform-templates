@@ -28,7 +28,7 @@ variable "PANFWRegionMap" {
       "ap-south-1"     =   "ami-e780d988"
     }
 }
-variable "WebServerRegionMap" {
+variable "WebServerRegionMap" 
   type = "map"
   default = {
     "us-east-1"        = "ami-1ecae776",
@@ -47,7 +47,7 @@ variable "WebServerRegionMap" {
 
 variable "UbuntuRegionMap" {
   type = "map"
-  default = {
+  default = 
   "us-west-2"      =  "ami-efd0428f",
       "ap-northeast-1" =  "ami-afb09dc8",
       "us-west-1"      =  "ami-2afbde4a",
