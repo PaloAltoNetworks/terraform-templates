@@ -1,5 +1,7 @@
 Terraform Templates to Deploy Infrastructure onto Azure
 -------------------------------------------------------
+Terraform version: 0.13.0
+Azure RM provider: 2.23.0
 
 PreRequisites:
 -------------
@@ -35,13 +37,14 @@ Credentials and Authentication:
             client_id = "<client_id>"
             client_secret = "<secret used while creating the application>"
             tenant_id = "<tenant_id>"
+            features {} 
         }
     ```
 
 Usage:
 ------
 
-   run terraform: ```terraform apply```
+   run terraform: ```terraform init``` ```terraform plan``` ```terraform apply```
 
  Support:
  --------

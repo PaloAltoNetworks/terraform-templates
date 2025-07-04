@@ -8,8 +8,11 @@ variable "FirewallVmName" {}
 variable "FirewallVmSize" {}
 variable "FromGatewayLogin" {}
 
-variable "storageAccountType" {
-  default = "Standard_LRS"
+variable "storageAccountTier" {
+  default = "Standard"
+}
+variable "storageAccountReplType" {
+  default = "GRS"
 }
 
 variable "fwpublicIPName" {
@@ -79,7 +82,7 @@ variable "nicName" {
 }
 
 variable "fwSku" {
-  default = "bundle2"
+  default = "byol"
 }
 
 variable "fwOffer" {
